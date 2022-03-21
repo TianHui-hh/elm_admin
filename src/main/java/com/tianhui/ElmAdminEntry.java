@@ -2,7 +2,9 @@ package com.tianhui;
 
 import com.tianhui.po.Admin;
 import com.tianhui.view.AdminView;
+import com.tianhui.view.BusinessView;
 import com.tianhui.view.impl.AdminViewImpl;
+import com.tianhui.view.impl.BusinessViewImpl;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -15,6 +17,7 @@ public class ElmAdminEntry {
         System.out.println("---------------------------------------------");
 
         AdminView adminView = new AdminViewImpl();
+        BusinessView businessView = new BusinessViewImpl();
         Admin admin = adminView.login();
 
 
@@ -28,10 +31,10 @@ public class ElmAdminEntry {
                 menu = input.nextInt();
                 switch (menu) {
                     case 1:
-                        System.out.println("所有商家列表");
+                        businessView.listBusinessAll();
                         break;
                     case 2:
-                        System.out.println("搜索商家");
+                        businessView.listBusiness();
                         break;
                     case 3:
                         System.out.println("新建商家");
