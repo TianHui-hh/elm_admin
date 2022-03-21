@@ -37,10 +37,10 @@ public class ElmAdminEntry {
                         businessView.listBusiness();
                         break;
                     case 3:
-                        System.out.println("新建商家");
+                        businessView.saveBusiness();
                         break;
                     case 4:
-                        System.out.println("删除商家");
+                        businessView.removeBusiness();
                         break;
                     case 5:
                         System.out.println("----------------------------欢迎下次光临后台管理系统----------------------------");

@@ -51,4 +51,35 @@ public class BusinessViewImpl implements BusinessView {
 
 
     }
+
+    @Override
+    public void saveBusiness() throws SQLException {
+        System.out.println("请输入商家名称: ");
+        String businessName = input.next();
+        BusinessDao dao = new BusinessDaoImpl();
+        int businessId = dao.saveBusiness(businessName);
+        if (businessId > 0) {
+            System.out.println("新建商家成功! 商家编号为: " + businessId + "\n初始密码为: 123");
+        } else {
+            System.out.println("新建商家失败! ");
+        }
+    }
+
+    @Override
+    public void removeBusiness() throws SQLException {
+        System.out.println("请输入商家编号: ");
+        int businessId = input.nextInt();
+
+        BusinessDao dao = new BusinessDaoImpl();
+        System.out.println("确认要删除(y/n)?");
+        if (input.next().equals("y")) {
+            int result = dao.removeBusiness(businessId);
+            if (result == 1) {
+                System.out.println("删除商家成功! ");
+            } else {
+                System.out.println("删除商家失败! ");
+            }
+        }
+
+    }
 }

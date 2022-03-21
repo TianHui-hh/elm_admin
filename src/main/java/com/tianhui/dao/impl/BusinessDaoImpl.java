@@ -51,4 +51,57 @@ public class BusinessDaoImpl implements BusinessDao {
 
     }
 
+    @Override
+    public int saveBusiness(String businessName) throws SQLException {
+        int businessId = 0;
+        String sql = "insert into business (businessName,password) value(?,'123')";
+        try {
+            con = DBUtil.getConnection();
+            //设置返回自增长列值
+            pst = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            pst.setString(1, businessName);
+            pst.executeUpdate();
+            //获取自增长列值(一行一列)
+            rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                businessId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, pst, con);
+        }
+        return businessId;
+    }
+
+    @Override
+    public int removeBusiness(int businessId) throws SQLException {
+        int result = 0;
+        String delFoodSql = "delete from food where businessId=?";
+        String delBusinessSql = "delete from business where businessId=?";
+        try {
+            con = DBUtil.getConnection();
+            //开启一个事务
+            con.setAutoCommit(false);
+
+            pst = con.prepareStatement(delFoodSql);
+            pst.setInt(1, businessId);
+            pst.executeUpdate();
+
+            pst = con.prepareStatement(delBusinessSql);
+            pst.setInt(1, businessId);
+            result = pst.executeUpdate();
+
+            con.commit();
+
+        } catch (
+                SQLException e) {
+            result = 0;
+            con.rollback();
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(null, pst, con);
+        }
+        return result;
+    }
 }
