@@ -9,7 +9,7 @@ public class Food {
 
     @Override
     public String toString() {
-        return "Food{" +
+        return "食品:  {" +
                 "食品编号=" + foodId +
                 ", 食品名称='" + foodName + '\'' +
                 ", 食品介绍='" + foodExplain + '\'' +

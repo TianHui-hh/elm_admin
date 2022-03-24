@@ -2,7 +2,9 @@ package com.tianhui;
 
 import com.tianhui.po.Business;
 import com.tianhui.view.BusinessView;
+import com.tianhui.view.FoodView;
 import com.tianhui.view.impl.BusinessViewImpl;
+import com.tianhui.view.impl.FoodViewImpl;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -37,7 +39,7 @@ public class ElmBusinessEntry {
                         businessView.updateBusinessByPassword(business.getBusinessId());
                         break;
                     case 4:
-                        foodManager();
+                        foodManager(business.getBusinessId());
                         break;
                     case 5:
                         System.out.println("----------------------------欢迎下次光临后台管理系统----------------------------");
@@ -54,7 +56,9 @@ public class ElmBusinessEntry {
 
     }
 
-    private void foodManager() {
+    private void foodManager(int businessId) throws SQLException {
+        FoodView foodView = new FoodViewImpl();
+
         Scanner input = new Scanner(System.in);
         int menu = 0;
         while (menu != 5) {
@@ -64,16 +68,16 @@ public class ElmBusinessEntry {
             menu = input.nextInt();
             switch (menu) {
                 case 1:
-                    System.out.println("1.查看食品列表");
+                    foodView.showFoodList(businessId);
                     break;
                 case 2:
-                    System.out.println("2.新增食品");
+                    foodView.saveFood(businessId);
                     break;
                 case 3:
-                    System.out.println("3.修改食品");
+                    foodView.updateFood(businessId);
                     break;
                 case 4:
-                    System.out.println("4.删除食品");
+                    foodView.removeFood(businessId);
                     break;
                 case 5:
                     break;
